@@ -1,0 +1,42 @@
+You have been tasked with implementing a functional LinkedIn-like social networking platform. Your objective is to design and create a practical
+database system that efficiently stores and manages user profiles,connections, job postings, and other relevant information. You are required
+to perform the following tasks:
+ER Diagram:
+• Create an entity-relationship (ER) diagram to visually represent the
+relationships between entities in the LinkedIn database.
+• Include entities, attributes, relationships, and cardinalities in the ER
+diagram.
+• Capture any additional constraints or requirements specific to the
+LinkedIn database.
+Database System:
+• Create a new database with your RegNo
+• Design the schema for the LinkedIn database, considering entities
+such as users, profiles, connections, job postings, and any other
+relevant entities you deem necessary.
+• Create the necessary tables for each entity, ensuring appropriate data
+types, primary keys, and foreign keys.
+• Implement the necessary integrity constraints, such as unique
+constraints, not-null constraints, and any other constraints deemed
+necessary for data consistency.
+• Populate the tables with sample data to demonstrate the
+functionality of the LinkedIn database.
+• Write SQL queries to perform the following tasks:
+o Retrieve a user's profile information, including their
+connections and job history.
+o Search for job postings based on specific criteria (e.g., job title,
+location, industry).
+o Insert new user profiles, job postings, and connection requests
+into the respective tables.
+o Update user profile information and job postings.
+o Delete user profiles and job postings.
+• Execute and test the SQL queries to ensure they retrieve, modify, and
+delete the data accurately.
+o Retrieve users who have the most common connections with a
+specific user
+o Retrieve users who possess a unique combination of skills
+o Calculate the average number of connections per user
+o Retrieve the users who have not posted any job openings
+o Retrieve users who have connections in a specific industry
+o Modify a job posting's salary range
+o Modify a user's employment status.
+o Retrieve the number of job postings per industry

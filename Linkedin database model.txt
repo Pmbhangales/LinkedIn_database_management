@@ -1,0 +1,208 @@
+--Create the necessary tables for each entity, ensuring appropriate data types, primary keys, and foreign keys.
+--Create table for 21BCI0285_Users
+CREATE TABLE 21BCI0285_Users (
+       user_id VARCHAR(50) PRIMARY KEY,
+       first_name VARCHAR(50),
+       last_name VARCHAR(50),
+       email VARCHAR(100),
+       password VARCHAR(100),
+       employment_status VARCHAR(50));
+desc 21bci0285_users;
+----------------------------------------------------------------------------------------------------------------
+
+--Create table for 21BCI0285_Profiles
+profile_id VARCHAR(50) PRIMARY KEY,
+       user_id VARCHAR(50),
+       headline VARCHAR(100),
+       summary VARCHAR(500),
+       experience VARCHAR(500),
+       FOREIGN KEY (user_id) REFERENCES 21BCI0285_Users(user_id)
+     );
+Desc 21BCI0285_Profiles;
+----------------------------------------------------------------------------------------------------------------
+
+--Create table for 21BCI0285_Connections
+CREATE TABLE 21BCI0285_Connections (
+       connection_id VARCHAR(50) PRIMARY KEY,
+       user_id VARCHAR(50),
+       connected_user_id VARCHAR(50),
+       FOREIGN KEY (user_id) REFERENCES 21BCI0285_Users(user_id),
+       FOREIGN KEY (connected_user_id) REFERENCES 21BCI0285_Users(user_id)
+     );
+
+Desc 21BCI0285_Connections;
+---------------------------------------------------------------------------------------------------------------- 
+--Create table for 21BCI0285_JobPostings
+CREATE TABLE 21BCI0285_JobPostings (
+       job_id VARCHAR(50) PRIMARY KEY,
+       user_id VARCHAR(50),
+       title VARCHAR(100),
+       location VARCHAR(100),
+       industry VARCHAR(100),
+       salary_range VARCHAR(50),
+       FOREIGN KEY (user_id) REFERENCES 21BCI0285_Users(user_id)
+     );
+Desc 21BCI0285_JOBPostings;
+----------------------------------------------------------------------------------------------------------------
+
+----Populate the tables with sample data to demonstrate the functionality of the LinkedIn database.
+INSERT INTO 21BCI0285_Users (user_id, first_name, last_name, email, password, employment_status)
+     VALUES ('user1', 'John', 'Doe', 'john.doe@example.com', 'password123', 'Employed'),
+     ('user2', 'john', 'Suee', 'john.suee@example.com', 'password058', 'UnEmployed'),
+     ('user8', 'Jay', 'S', 's.jay@gmail.com', 'password058', 'UnEmployed');
+ 
+mysql> select * from 21BCI0285_users;
+ 
+----------------------------------------------------------------------------------------------------------------
+
+INSERT INTO 21BCI0285_Profiles (profile_id, user_id, headline, summary, experience)
+     VALUES ('profile1', 'user1', 'Software Engineer', 'Experienced software engineer with expertise in web development.', 'Previous job experience');
+INSERT INTO 21BCI0285_Profiles (profile_id, user_id, headline, summary, experience)
+     VALUES ('profile2', 'user2', 'Software Engineer', 'Experienced software engineer with expertise in web development.', 'Oracle');
+INSERT INTO 21BCI0285_Profiles (profile_id, user_id, headline, summary, experience)
+     VALUES ('profile3', 'user8', 'Software Engineer', 'Experienced software engineer with expertise in web development.', 'Cisco');
+Select * from 21BCI0285_Profiles;
+ 
+
+----------------------------------------------------------------------------------------------------------------
+
+
+INSERT INTO 21BCI0285_JobPostings (job_id, user_id, title, location, industry, salary_range)
+     VALUES
+     ('job5', 'user1', 'Data Scientist', 'San Francisco', 'Technology', 'Competitive salary'),
+     ('job4', 'user8', 'Data Scientist', 'London', 'Technology', 'Competitive salary'),
+     ('job6', 'user2', 'Software Engineer', 'London', 'Technology', 'Competitive salary');
+mysql> select * from 21bci0285_Jobpostings;
+ 
+
+----------------------------------------------------------------------------------------------------------------
+
+
+
+----------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------
+--Write SQL queries to perform the following tasks:
+****** Retrieve a user's profile information, including their connections and job history.
+SELECT Users.*, Profiles.*, Connections.*, Jobpostings.*
+FROM 21BCI0285_Users Users
+JOIN 21BCI0285_Profiles Profiles ON Users.user_id = Profiles.user_id
+LEFT JOIN 21BCI0285_Connections Connections ON Users.user_id = Connections.user_id OR Users.user_id = Connections.connected_user_id
+LEFT JOIN 21BCI0285_JobPostings Jobpostings ON Users.user_id = Jobpostings.user_id
+WHERE Users.user_id = 'user1';
+
+ 
+----------------------------------------------------------------------------------------------------------------
+
+
+****** Search for job postings based on specific criteria (e.g., job title, location, industry).
+SELECT *
+     FROM 21BCI0285_JobPostings
+     WHERE title = 'Software Engineer' AND location = 'New York' AND industry = 'Technology';
+----------------------------------------------------------------------------------------------------------------
+SELECT *
+     FROM 21BCI0285_JobPostings
+     WHERE title = 'Software Engineer' AND location = 'New York' AND industry = 'Technology';
+----------------------------------------------------------------------------------------------------------------
+SELECT *
+     FROM 21BCI0285_JobPostings
+     WHERE title = 'Software Engineer' AND location = 'London' AND industry = 'Technology';
+----------------------------------------------------------------------------------------------------------------
+SELECT *
+     FROM 21BCI0285_JobPostings
+     WHERE title = 'Data Scientist ' AND location = 'San Francisco' AND industry = 'Technology';
+----------------------------------------------------------------------------------------------------------------
+SELECT *
+     FROM 21BCI0285_JobPostings
+     WHERE title = 'Data Scientist ' AND location = 'London' AND industry = 'Technology';
+ ----------------------------------------------------------------------------------------------------------------
+****** Insert new user profiles, job postings, and connection requests into the respective tables.
+INSERT INTO 21BCI0285_Users (user_id, first_name, last_name, email, password, employment_status)
+     VALUES ('user3', 'Mike', 'Johnson', 'mike.johnson@example.com', 'password789', 'Employed');
+ 
+INSERT INTO 21BCI0285_Profiles (profile_id, user_id, headline, summary, experience)
+     VALUES ('profile4', 'user3', 'Data Analyst', 'Experienced data analyst with a focus on statistical analysis.', 'Previous job experience');
+ 
+INSERT INTO 21BCI0285_JobPostings (job_id, user_id, title, location, industry, salary_range)
+     VALUES ('job1', 'user3', 'Data Scientist', 'San Francisco', 'Technology', 'Competitive salary');
+ 
+INSERT INTO 21BCI0285_Connections (connection_id, user_id, connected_user_id)
+     VALUES ('connection1', 'user1', 'user3');
+----------------------------------------------------------------------------------------------------------------
+****** Update user profile information and job postings.
+UPDATE 21BCI0285_Profiles
+SET headline = 'Senior Software Engineer', summary = 'Experienced software engineer with expertise in web development.'
+WHERE user_id = 'user1';
+ 
+
+UPDATE 21BCI0285_JobPostings
+SET salary_range = 'Negotiable'
+WHERE job_id = 'job1';
+----------------------------------------------------------------------------------------------------------------
+
+****** Delete user profiles and job postings
+DELETE FROM 21BCI0285_Users
+WHERE user_id = 'user2';
+ 
+DELETE FROM 21BCI0285_JobPostings
+WHERE job_id = 'job1';
+----------------------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------
+
+----Execute and test the SQL queries to ensure they retrieve, modify, and
+delete the data accurately.
+****** Retrieve users who have the most common connections with a
+specific user
+SELECT User.user_id, User.first_name, User.last_name, COUNT(*) AS common_connections
+FROM 21BCI0285_Users User
+JOIN 21BCI0285_Connections C1 ON User.user_id = C1.connected_user_id
+JOIN 21BCI0285_Connections C2 ON C1.user_id = C2.user_id
+WHERE C2.connected_user_id = 'specific_user_id'
+GROUP BY User.user_id, User.first_name, User.last_name
+ORDER BY COUNT(*) DESC
+LIMIT 5;
+----------------------------------------------------------------------------------------------------------------
+****** Retrieve users who possess a unique combination of skills
+SELECT U.user_id, U.first_name, U.last_name, P.headline
+FROM 21BCI0285_Users U
+JOIN 21BCI0285_Profiles P ON U.user_id = P.user_id
+GROUP BY U.user_id, U.first_name, U.last_name, P.headline
+HAVING COUNT(*) = 1;
+---------------------------------------------------------------------------------------------------------------- 
+****** Calculate the average number of connections per user
+SELECT AVG(connection_count) AS average_connections
+FROM (
+  SELECT user_id, COUNT(*) AS connection_count
+  FROM 21BCI0285_Connections
+  GROUP BY user_id
+) AS subquery;
+----------------------------------------------------------------------------------------------------------------
+****** Retrieve the users who have not posted any job openings
+SELECT U.user_id, U.first_name, U.last_name
+FROM 21BCI0285_Users U
+LEFT JOIN 21BCI0285_JobPostings J ON U.user_id = J.user_id
+WHERE J.user_id IS NULL; 
+****** Retrieve users who have connections in a specific industry
+SELECT DISTINCT U.user_id, U.first_name, U.last_name
+     FROM 21BCI0285_Users U
+     JOIN 21BCI0285_Connections C ON U.user_id = C.user_id
+     JOIN 21BCI0285_JobPostings J ON C.connected_user_id = J.user_id
+     WHERE J.industry = 'specific_industry';
+Empty set (0.00 sec)
+---------------------------------------------------------------------------------------------------------------- 
+****** Modify a job posting's salary range
+UPDATE 21BCI0285_JobPostings
+SET salary_range = 'new_salary_range'
+WHERE job_id = 'specific_job_id'; 
+****** Modify a user's employment status.
+UPDATE 21BCI0285_Users
+SET employment_status = 'new_employment_status'
+WHERE user_id = 'specific_user_id';
+----------------------------------------------------------------------------------------------------------------
+****** Retrieve the number of job postings per industry
+SELECT industry, COUNT(*) AS job_count
+FROM 21BCI0285_JobPostings
+GROUP BY industry;
+----------------------------------------------------------------------------------------------------------------
